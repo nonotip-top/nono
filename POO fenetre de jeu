@@ -1,1 +1,39 @@
+from tkinter import*
+from math import *
+fenetre = Tk()
+canevas = Canvas(fenetre, width =990, height =522, bg ='#92afac', borderwidth=0)                                                                       
+canevas.create_image(495,260) 
+canevas.grid(row=2, column=0, columnspan=4, pady=0, padx=130, sticky='sw')
 
+
+
+class Boule():
+    def __init__(self, couleur, abscisse, ordonnee, angle=0, vitesse=0):
+        self.color = couleur
+        self.x = abscisse
+        self.y = ordonnee
+        self.a = angle
+        self.v = vitesse
+        self.objet = canevas.create_oval(self.x-12,self.y-12,self.x+12,self.y+12, fill=self.color)
+
+
+
+blanche = Boule(couleur='white',abscisse=22,ordonnee=22)
+rouge = Boule(couleur='red',abscisse=48,ordonnee=48)
+
+def redessinner_queue(event):
+    global q,a
+    canevas.delete(q)
+    a = radians(blanche.a)
+    xq = blanche.x-14*cos(a)
+    yq = blanche.y+14*sin(a)
+    x_q = blanche.x-350*cos(a)
+    y_q = blanche.y+350*sin(a)
+    q = canevas.create_line(xq, yq, x_q, y_q, fill='red', width=5)
+
+
+
+
+canevas.bind('<Button-1>', redessinner_queue)
+q = canevas.create_line(blanche.x-12,blanche.y,blanche.x-350,blanche.y, fill='red', width=7)
+fenetre.mainloop()
